@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="cz">
+  <head>
+    <!-- styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/layout.css" />
+    <!--JS
+    <script>
+      $(function(){
+        $("#includeSimple").load("simple.html");
+      });
+    </script>-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/mine.js"></script>
+    <!--colorpicker JS-->
+    <script type="text/javascript" src="js/colorpicker.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <!--Content-->
+      <div id="content">
+          <!-- Jumbotron -->
+          <div class="jumbotron">
+            <h1>LEDs controling</h1>
+            <p>Lest make it shine!</p>
+          </div>
+          <!--main tab menu-->
+          <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
+              <li class="active"><a href="#main" data-toggle="tab">Main</a></li>
+              <li><a href="#simple" data-toggle="tab">Simple</a></li>
+              <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
+              <li class="disabled"><a href="#setting" data-toggle="tab">Settings</a></li>
+          </ul>
+          <div id="my-tab-content" class="tab-content">
+              <div class="tab-pane fade in active" id="main">
+                <p>Shine!
+                  <div class="btn-group-lg" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="options" id="option1" checked> On
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="options" id="option2"> Off
+                    </label>
+                  </div>
+                </p>
+                <br>
+                <button type="button" class="btn btn-default btn-lg">
+                   White
+                </button>
+                <button type="button" class="btn btn-default btn-lg">
+                   Red
+                </button>
+                <button type="button" class="btn btn-default btn-lg">
+                   Green
+                </button>
+                <button type="button" class="btn btn-default btn-lg">
+                   Blue
+                </button>
+                <br><br>
+                Bright
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                  <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                </div>
+                <br>
+                <br>
+                <button type="button" class="btn btn-default btn-lg">
+                   Rainboooow!
+                </button>
+              </div>
+              <div class="tab-pane fade" id="simple">
+
+
+                <br>
+                <div class="text-center">
+                  <div class="btn-group btn-group-lg" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="options" id="option1" checked> 1
+                    </label>
+                    <label class="btn btn-primary" id="option2">
+                      <input type="radio" name="options" > 2
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="options" id="option3"> 3
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="options" id="option3"> 4
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="options" id="option3"> 5
+                    </label>
+                  </div>
+                </div>
+
+                <div class="text-center" id="cPick">
+                </div>
+                <script type="text/javascript">
+                (function() {
+                  var httpRequest;
+                  document.getElementById("option2").onclick = function() { makeRequest('colorpick.html'); };
+
+                  function makeRequest(url) {
+                    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+                      httpRequest = new XMLHttpRequest();
+                    } else if (window.ActiveXObject) { // IE
+                      try {
+                        httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                      }
+                      catch (e) {
+                        try {
+                          httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        catch (e) {}
+                      }
+                    }
+
+                    if (!httpRequest) {
+                      alert('Giving up :( Cannot create an XMLHTTP instance');
+                      return false;
+                    }
+                    httpRequest.onreadystatechange = alertContents;
+                    httpRequest.open('GET', url);
+                    httpRequest.send();
+                  }
+
+                  function alertContents() {
+                    if (httpRequest.readyState === 4) {
+                      if (httpRequest.status === 200) {
+                        alert(httpRequest.responseText);
+                      } else {
+                        alert('There was a problem with the request.');
+                      }
+                    }
+                  }
+                })();
+                </script>
+              </div>
+              <div class="tab-pane fade" id="advanced">
+                  <ul id="advTabs" class="nav nav-tabs" data-tabs="tabs" onchange="getColorpick();">
+                      <li><a href="#first" data-toggle="tab" value="1">Channel 1</a></li>
+                      <li><a href="#second" data-toggle="tab" value="2">Channel 2</a></li>
+                      <li><a href="#third" data-toggle="tab" value="3">Channel 3</a></li>
+                      <li><a href="#fourth" data-toggle="tab" value="4">Channel 4</a></li>
+                      <li><a href="#fifth" data-toggle="tab" value="5">Channel 5</a></li>
+                  </ul>
+                  <div id="my-tab-content" class="tab-content">
+                      <div class="tab-pane fade" id="first">
+                          <h1>Red</h1>
+
+                      </div>
+                      <div class="tab-pane fade" id="second">
+                          <h1>Orange</h1>
+                          <p id="colorpickerHolder">
+                          </p>
+                      </div>
+                      <div class="tab-pane fade" id="third">
+                          <h1>Yellow</h1>
+                          <p id="colorpickerHolder">
+                          </p>
+                      </div>
+                      <div class="tab-pane fade" id="fourth">
+                          <h1>Green</h1>
+                          <p id="colorpickerHolder">
+                          </p>
+                      </div>
+                      <div class="tab-pane fade" id="fifth">
+                          <h1>Blue</h1>
+                          <p id="colorpickerHolder">
+                          </p>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane fade" id="setting">
+                  <h1>Settings</h1>
+              </div>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
